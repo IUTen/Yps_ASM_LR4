@@ -8,5 +8,5 @@
 
 
 <p align= "center">
-  <img src="https://i.ibb.co/m4sSS7G/in_progress_no_back.gif" width=256>
+  <img src="https://i.ibb.co/L82fWj9/noback-inprogress.gif" width=256>
 </p>
