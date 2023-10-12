@@ -11,10 +11,12 @@ interruption_:
     push dx
     push ds
 
-    mov ax, cs                  ;Инициализируем ds
+    mov ax, cs                  
     mov ds, ax
 
-    mov bx, 0x6e                ;Записываем адрес смещения(из прошлой лабы)
+    mov es, bx
+    mov bx, 0
+
     call main
 
     pop ds                      ;Возрат значений регистров
@@ -35,9 +37,9 @@ main:
 
         mov cx,16               ;Пробегаем по столбцам
         column_run:
-            mov al, byte[di+bx] ;записали значение из памяти для вывода
+            mov al, byte[es:di] ;записали значение из памяти для вывода
             call print_al
-            inc bx              ;сделали шаг для номера ячейки в памяти
+            inc di              ;сделали шаг для номера ячейки в памяти
             call make_space
             loop column_run
         
