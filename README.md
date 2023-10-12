@@ -78,8 +78,11 @@ interruption_:
     push dx
     push ds
 
-    mov ax, cs                  ;Инициализируем ds
+    mov ax, cs                  
     mov ds, ax
+
+    mov es, bx
+    mov bx, 0
 
     mov bx, 0x6e                ;Записываем адрес смещения(из прошлой лабы)
     call main
@@ -115,9 +118,9 @@ main:
 
         mov cx,16               ;Пробегаем по столбцам
         column_run:
-            mov al, byte[di+bx] ;записали значение из памяти для вывода
+            mov al, byte[es:di] ;записали значение из памяти для вывода
             call print_al
-            inc bx              ;сделали шаг для номера ячейки в памяти
+            inc di              ;сделали шаг для номера ячейки в памяти
             call make_space
             loop column_run
         
@@ -208,8 +211,8 @@ new_line:
 use16
 org 0x100
 
-mov ax, ds              ;Запись значения сегмента для вывода дампа
-mov di, ax
+mov bx, 0x0
+mov di, 0x0
 
 int 8bh                 ;Вызов резидентной программы
 
@@ -219,7 +222,7 @@ int 20h
 ```
 
 + `use16 и org 0x100` - Знакомые нам начальные директивы
-+ `mov ax, ds` <br> `mov di, ax` - Указываем сегмент для вывода
++ `mov bx,0x0` <br> `mov di, 0x0` - Указываем сегмент и смещение для вывода
 + `int 8bh` - Вызов нашего прерывания из первой программы. ***8bh аналогично записи 0x8b***
 + `mov ax, 0` <br> `int 16h` <br> `int 20h` - Завершение программы
 
